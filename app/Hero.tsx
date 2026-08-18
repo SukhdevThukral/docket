@@ -1,3 +1,5 @@
+import GradientLandscape from "./GradientLandscape";
+
 export default function Hero(){
     return(
         <div className="bg-white">
@@ -21,8 +23,15 @@ export default function Hero(){
 
                     <div className="flex items-center gap-6 mt-6">
                         <a href="/dashboard" className="bg-gray-900 text-white text-sm px-5 py-2.5 rounded-full hover:bg-gray-800 transition-colors">
-                            Start now!
+                            Start now
                         </a>
+                    </div>
+                    <div className="mt-12 w-full max-w-10xl rounded-2xl"
+                        style={{
+                            maskImage: "radial-gradient(ellipse 88% 88% at 50% 50%, black 55%, transparent 100%)",
+                            WebkitMaskImage: "radial-gradient(ellipse 88% 88% at 50% 50%, black 55%, transparent 100%)",
+                        }}>
+                        <GradientLandscape/>
                     </div>
                 </div>
             </section>
