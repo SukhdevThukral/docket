@@ -2,6 +2,7 @@ import Image from "next/image";
 import Header from "./Header";
 import Hero from "./Hero";
 import Features from "./Features";
+import Footer from "./Footer";
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
       <Header/>
       <Hero/>
       <Features/>
+      <Footer/>
     </div>
   );
 }
