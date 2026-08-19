@@ -12,11 +12,13 @@ export default function Hero(){
                         <span aria-hidden="true">→</span>
                     </div>
 
-                    <h1 className="font-display text-4xl sm:text-5xl text-gray-900 leading-tight mt-6">
+                    <h1 className="font-display text-4xl sm:text-5xl text-gray-900 leading-tight tracking-tighter mt-6"
+                        style={{fontFamily: "var(--font-hero)"}}>
                         Dream big, achieve faster, and grow your career.
                     </h1>
 
-                    <p className="mt-4 text-gray-600 max-w-lg">
+                    <p className="mt-4 text-gray-600 tracking-wide max-w-lg"
+                    >
                         Whether youre a high schooler or preparing to do your postgraduate, our platform
                         equips you to grow, manage, schedule and thrive.
                     </p>
