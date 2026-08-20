@@ -77,7 +77,7 @@ export default function AddApplicationModal({
     return (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-4">
             <div className="bg-white rounded-2xl w-full max-w-lg p-6 relative max-h-[85vh] overflow-y-auto">
-                <button onClick={() => {onclose(); reset(); }} className="absolute t op-4 right-4 text-gray-400 hover:text-gray-600">
+                <button onClick={() => {onClose(); reset(); }} className="absolute t op-4 right-4 text-gray-400 hover:text-gray-600">
                     <X className="w-4 h-4"/>
                 </button>
                 <h3 className="font-display text-lg text-gray-900">Add application</h3>
