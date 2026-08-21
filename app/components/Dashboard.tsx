@@ -77,7 +77,7 @@ export default function Dashboard({ applications: initialApps }: {applications: 
             <div className="flex items-center justify-between mb-4">
                 <h2 className="font-display text-xl text-gray-900">Applications</h2>
                 <button onClick={() => setModalOpen(true)}
-                className="flex items-center gap-1.5 bg-gray-900 text-white text-sm px-4 py-2 rounded-full hober:bg-gray-800 transition-colors">
+                className="flex items-center gap-1.5 bg-gray-900 text-white text-sm px-4 py-2 rounded-full hover:bg-gray-800 transition-colors">
                     <Plus className="w-3.5 h-3.5"/> Add application
                 </button>
             </div>
