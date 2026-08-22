@@ -3,7 +3,7 @@ import Dashboard from "../components/Dashboard";
 const applications = [
     {
         id: "1",
-        name: "HMR Bridge Enrollment",
+        name: "idk Bridge Enrollment",
         category: "BRIDGE PROGRAM",
         dueDate: "2026-10-20",
         daysLeft: 63,
