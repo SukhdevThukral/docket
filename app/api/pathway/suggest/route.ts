@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const sys_prom = `
+const sys_prom = 
+`
 You are a college/scholarship/career pathway advisor for a student
 You'll be given their current pathway as a JSON array of stages (primary path + fallback branches(possibly)).
 
