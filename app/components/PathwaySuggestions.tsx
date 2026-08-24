@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Sparkles, Loader2, TriangleAlert, ArrowRight, Plus } from "lucide-react";
 import type {Stage} from "./PathwayFlow";
 
@@ -8,7 +8,7 @@ type Suggestion = {
     title: string;
     reason: string;
     type: "fallback" | "next_step" | "risk";
-    stageData?: Omit<Stage, "id">;
+    stage?: Omit<Stage, "id">;
 };
 
 const ICONS = {
@@ -16,13 +16,23 @@ const ICONS = {
 };
 
 export default function PathwaySuggestions({
-    stages, onIncorporate,} : {stages:Stage[]; onIncorporate: (stage: Stage) => void;} ) {
+    stages, onIncorporate, focusStageId, onFocusClear,} : {stages:Stage[]; onIncorporate: (stage: Stage) => void; focusStageId?: string | null; onFocusClear?: () => void;} ) {
         const [suggestions, setSuggestions] = useState<Suggestion[] | null>(null);
         const [loading, setLoading] = useState(false);
         const [error, setError] = useState("");
         const [incorporated, setIncorporated] = useState<Set<number>>(new Set());
+        const [focusedLabel, setFocusedLabel] = useState<string | null>(null);
 
-        async function getSuggestions() {
+        useEffect(() => {
+            if (focusStageId) {
+                const stage = stages.find((s) => s.id === focusStageId);
+                setFocusedLabel(stage?.title ?? null);
+                getSuggestions(focusStageId);
+                onFocusClear?.();
+            }
+        }, [focusStageId, stages, onFocusClear]);
+
+        async function getSuggestions(focusId?: string) {
             setLoading(true);
             setError("");
             setIncorporated(new Set());
@@ -31,11 +41,12 @@ export default function PathwaySuggestions({
                 const res = await fetch("/api/pathway/suggest", {
                     method:"POST",
                     headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify({ stages }),
+                    body: JSON.stringify({ stages, focusStageId: focusId ?? null }),
                 });
                 if (!res.ok) throw new Error();
                 const data = await res.json();
                 setSuggestions(data.suggestions);
+                if (!focusId) setFocusedLabel(null);
             } catch {
                 setError("Couldn't generate suggestions - try again.");
             } finally {
@@ -44,9 +55,9 @@ export default function PathwaySuggestions({
         }
 
         function handleIncorporate(s: Suggestion, i: number) {
-            if (!s.stageData) return;
+            if (!s.stage) return;
             const newStage: Stage = {
-                ...s.stageData, id: `ai-${Date.now()}-${i}`,
+                ...s.stage, id: `ai-${Date.now()}-${i}`,
             };
             onIncorporate(newStage);
             setIncorporated((prev) => new Set(prev).add(i));
@@ -54,16 +65,24 @@ export default function PathwaySuggestions({
 
     return (
         <div className="border border-gray-200 rounded-xl p-5 w-full md:w-80 shrink-0">
+
             <div className="flex items-center justify-between">
-                <p className="text-xs text-gray-500 uppercase tracking-wide">AI Suggestions</p>
-                <button
-                    onClick={getSuggestions}
+                <div>
+                    <p className="text-xs text-gray-500 uppercase tracking-wide">AI Suggestions</p>
+                    {focusedLabel && (
+                        <p className="text-[10px] text-gray-400 mt-0.5 italic">
+                            for · {focusedLabel}
+                        </p>
+                    )}
+                </div>
+                <button onClick={() => {setFocusedLabel(null); getSuggestions();}}
                     disabled={loading}
                     className="text-xs flex items-center gap-1 text-gray-500 hover:text-gray-900 disabled:opacity-40">
                         {loading ? <Loader2 className="w-3 h-3 animate-spin"/> : <Sparkles className="w-3 h-3"/>}
                         {suggestions ? "Refresh" : "Analyse"}
                 </button>
             </div>
+            
             {error && <p className="text-xs text-red-500 mt-3">{error}</p>}
 
             {!suggestions && !loading && !error && (
@@ -82,7 +101,7 @@ export default function PathwaySuggestions({
                                 <div className="flex-1 min-w-0">
                                     <p className="text-sm text-gray-900 font-medium">{s.title}</p>
                                     <p className="text-xs text-gray-500 mt-1">{s.reason}</p>
-                                    {s.stageData && (
+                                    {s.stage && (
                                         <button onClick={() => handleIncorporate(s, i)}
                                         disabled={done}
                                         className={`mt-2 flex items-center gap-1 text-xs px-2 py-1 rounded-md transition-all
