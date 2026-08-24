@@ -12,13 +12,28 @@ Return ONLY valid JSON, no markdown, matching this shape:
             "title": string,                                //short suggestion, e.g. "Add a fallback for Stipendium Hungaricum"
             "reason" : string,                              // 1 sentence why this matters
             "type" : "fallback" | "next_step" | "risk"
+            "stage" : {
+                "title":string,
+                "timeframe": string,
+                "category" : string,
+                "kind" : "primary" | "fallback",
+                "parentId" : string | null,
+                "condition" : string | null
+            } | null
         }
     ]
 }
 
-Give 2-4 suggestions. Look for: primary stages with no fallback (single point of failure), unrealistic timing between stages, missing early stages (e.g. no bridge/interim plan), or good next actions given today's date: ${new Date().toISOString().split("T")[0]}.
-Be specific to their actual stages, not generic advice.` 
-;
+Rules:
+- Give 2-4 suggestions.
+- Set stageData to a concrete stage object when youre suggesting something addable (fallback, next_step)
+- Set stageData to null for "risk" type - those are just warnings
+- parentId must match an existing stage id from the input when kind is "fallback"
+- Today: ${new Date().toISOString().split("T")[0]}
+
+Be specific to their actual stages, not generic advice.
+
+` ;
 
 export async function POST(req: NextRequest) {
     const {stages} = await req.json();
