@@ -83,7 +83,7 @@ function layout(stages: Stage[], onSuggest?: (id:string) => void ) : {nodes: Nod
             id: stage.id,
             type: "stage",
             position: {x: 0, y},
-            data: {...stage, label: stage.title},
+            data: {...stage, label: stage.title, onSuggest},
             sourcePosition: Position.Bottom,
             targetPosition: Position.Top,
         });
