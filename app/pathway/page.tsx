@@ -13,10 +13,13 @@ const INITIAL_STAGES: Stage[] = [
 
 export default function PathwayPage () {
     const [stages, setStages] = useState<Stage[]>(INITIAL_STAGES);
+    const [focusStageId, setFocusStageId] = useState<string | null>(null);
+
 
     const handleSuggest = useCallback((stageId: string) => {
-        console.log("Node suggest clicked:", stageId);
+        setFocusStageId(stageId);
     }, []);
+
 
     const handleIncorporate = useCallback((newStage: Stage) => {
         setStages((prev) => {
@@ -25,6 +28,13 @@ export default function PathwayPage () {
         });
     }, []);
 
+    <PathwaySuggestions 
+        stages={stages}
+        onIncorporate={handleIncorporate}
+        focusStageId = {focusStageId}
+        onFocusClear = {() => setFocusStageId(null)}
+    />
+
     return (
         <div className="min-h-screen bg-white px-6 sm:px-12 md:px-24 lg:px-50 py-10">
             <h2 className="font-display text-xl text-gray-900 mb-4">Your pathway</h2>
@@ -32,7 +42,7 @@ export default function PathwayPage () {
                 <div className="flex-1">
                     <PathwayFlow stages={stages} onSuggest={handleSuggest}/>
                 </div>
-                <PathwaySuggestions stages={stages} onIncorporate={handleIncorporate}/>
+                <PathwaySuggestions stages={stages} onIncorporate={handleIncorporate} focusStageId={focusStageId} onFocusClear={() => setFocusStageId(null)}/>
             </div>
         </div>
     );
