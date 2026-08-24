@@ -45,7 +45,7 @@ function StageNode({data}:{data: Stage & { label: string; onSuggest?: (id: strin
             <Handle type="source" position={Position.Bottom} style={{opacity: 0}}/>
             <Handle type="source" position={Position.Right} style={{opacity:0}}/>
             
-            <button onClick={() => data.onSuggest?.(data.id)}
+            <button onClick={(e) => { e.stopPropagation(); data.onSuggest?.(data.id);}}
                 className={`absolute -top-3 -right-3 w-7 h-7 rounded-full bg-gray-900 text-white flex items-center justify-center transition-all duration-150 ${hovered?"opacity-100 scale-100": "opacity-0 scale-75 pointer-events-none"}`}
                 aria-label="Get suggestion for this stage">
                     <Sparkles className="w-3.5 h-3.5"/>
