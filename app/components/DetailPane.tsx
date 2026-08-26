@@ -49,6 +49,7 @@ export default function DetailPane({
             <div className="mt-4 flex items-center gap-3">
                 <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
                     <div className="h-full bg-gray-900 rounded-full transition-all"
+                        style={{width: `${pct}%`}}
                     />
                 </div>
                 <span className="text-xs font-mono text-gray-500 shrink-0">
