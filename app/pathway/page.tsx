@@ -8,11 +8,35 @@ import PathwaySuggestions from "../components/PathwaySuggestions";
 
 
 export default function PathwayPage () {
-    const {stages, incorporateStage} = useAppStore();
+    const {applications, addApplication} = useAppStore();
     const [focusStageId, setFocusStageId] = useState<string | null>(null);
 
+    const stages: Stage[] = applications.map((a) => ({
+        id: a.id,
+        title: a.name,
+        timeframe: a.timeframe,
+        category: a.category,
+        kind: a.kind,
+        parentId: a.parentId,
+        condition: a.condition,
+        status: a.pathwayStatus,
+    }));
+
     function handleIncorporate(stage: Stage) {
-        incorporateStage(stage);
+        addApplication({
+            id: stage.id,
+            name: stage.title,
+            category: stage.category,
+            status: "not_started",
+            dueDate: "",
+            daysLeft: 0,
+            checklist: [],
+            timeframe: stage.timeframe,
+            kind: stage.kind,
+            parentId: stage.parentId,
+            condition: stage.condition,
+            pathwayStatus: stage.status,
+        });
     }
 
     return (
