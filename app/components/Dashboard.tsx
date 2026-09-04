@@ -5,22 +5,8 @@ import { Plus } from "lucide-react";
 import ApplicationList from "./ApplicationsList";
 import DetailPane from "./DetailPane";
 import AddApplicationModal from "./ApplicationModal";
-
-type ChecklistItem = {
-    id: string;
-    label: string;
-    done: boolean
-};
-
-type Application = {
-    id: string;
-    name: string;
-    category: string;
-    dueDate: string;
-    daysLeft: number;
-    status: "in_progress" | "not_started" | "complete";
-    checklist: ChecklistItem[];
-};
+import { useAppStore } from "@/store/useAppStore";
+import type { Application } from "@/store/useAppStore";
 
 type Draft = {
     name: string;
@@ -30,46 +16,42 @@ type Draft = {
 };
 
 function daysUntil(dateStr: string) {
+    if (!dateStr) return 0;
     const due = new Date(dateStr).getTime();
     const now = new Date().setHours(0, 0, 0, 0);
     return Math.max(0, Math.round((due-now)/(1000*60*60*24)))
 }
 
-export default function Dashboard({ applications: initialApps }: {applications: Application[]}) {
-    const [applications, setApplications] = useState<Application[]>(initialApps);
-    const [selectedID, setSelectedID] = useState<string>(initialApps[0]?.id ?? "");
+export default function Dashboard() {
+    const {applications, addApplication, toggleChecklistItem} = useAppStore();
+    const [selectedID, setSelectedID] = useState<string>(applications[0]?.id ?? "");
     const [modalOpen, setModalOpen] = useState(false);
 
     const selected = applications.find((a) => a.id === selectedID);
 
     function toggleItem(itemId: string) {
-        setApplications((prev) => 
-        prev.map((app) =>
-        app.id !== selectedID ? app : {
-            ...app, checklist: app.checklist.map((i) => i.id === itemId ? {...i, done:  !i.done}:i
-                ),
-            }
-        ));   
+        toggleChecklistItem(selectedID, itemId);
     }
 
-    function addApplication(draft: Draft) {
+    function handleAdd(draft: Draft) {
         const newApp: Application = {
             id: crypto.randomUUID(),
             name: draft.name,
-            category: draft.category,
+            category: draft.category,            
+            status: "not_started",
             dueDate: draft.dueDate,
             daysLeft: daysUntil(draft.dueDate),
-            status: "not_started",
             checklist: draft.checklist.map((label) => ({
                 id: crypto.randomUUID(),
                 label,
                 done: false,
             })),
+            timeframe: draft.dueDate,
+            kind: "primary",
+            pathwayStatus: "upcoming",
         };
-        setApplications((prev) => [...prev, newApp]);
+        addApplication(newApp);
         setSelectedID(newApp.id);
-
-        //todo - persisit to db
     }
 
     return (
@@ -84,7 +66,7 @@ export default function Dashboard({ applications: initialApps }: {applications: 
                 </div>
                 <button onClick={() => setModalOpen(true)}
                         className="flex items-center gap-1.5 bg-gray-900 text-white text-sm px-4 py-2 rounded-full hover:bg-gray-800 transition-colors">
-                    <Plus className="w-3.5 h-3.5"/>Add application
+                    <Plus className="w-3.5 h-3.5"/> Add application
                 </button>
             </div>
 
@@ -96,7 +78,7 @@ export default function Dashboard({ applications: initialApps }: {applications: 
                 selectedID={selectedID} onSelect={setSelectedID}/>
                 {selected && <DetailPane app={selected} onToggleItem={toggleItem}/>}
             </div>
-            <AddApplicationModal open={modalOpen} onClose={() => setModalOpen(false)} onConfirm={addApplication}/>
+            <AddApplicationModal open={modalOpen} onClose={() => setModalOpen(false)} onConfirm={handleAdd}/>
         </div>
     );
 }
