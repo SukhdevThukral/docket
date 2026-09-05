@@ -1,12 +1,23 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
+
+type Stage = {
+    id: string;
+    title: string;
+    timeframe:string;
+    category: string;
+    kind: "primary" | "fallback";
+    parentId?: string;
+    condition?: string;
+    status: "done" | "current" | "upcoming";
+};
+
 export type Item = {
     id: string;
     label: string;
     done: boolean;
 }
-
 
 export type Application = {
     //shared content
@@ -41,6 +52,7 @@ type AppStore = {
     updateApplication: (id: string, patch: Partial<Application>) => void;
     removeApplication: (id: string) => void;
     toggleChecklistItem: (appId: string, itemId: string) => void;
+    incorporateStage: (stage: Stage) => void;
 };
 
 export const useAppStore = create<AppStore>()(
@@ -119,6 +131,28 @@ export const useAppStore = create<AppStore>()(
                         }
                     ),
                 })),
+
+            incorporateStage: (stage) => 
+                set((state) => {
+                    const newApp: Application = {
+                        id: stage.id,
+                        name: stage.title,
+                        category: stage.category,
+                        status:"not_started",
+                        dueDate: "",
+                        daysLeft: 0,
+                        checklist: [],
+                        timeframe: stage.timeframe,
+                        kind: stage.kind,
+                        parentId: stage.parentId,
+                        condition: stage.condition,
+                        pathwayStatus: stage.status,
+                    };
+                    const already = state.applications.some((a) => a.id === newApp.id);
+                    return {
+                        applications: already ? state.applications : [...state.applications, newApp],
+                    };
+                }),
         }),
         {
             name: "docket-store",
