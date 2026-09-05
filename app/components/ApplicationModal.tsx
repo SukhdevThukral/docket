@@ -8,16 +8,20 @@ type Draft = {
     category: string;
     dueDate: string;
     checklist: string[];
+    kind: "primary" | "fallback";
+    parentId?: string | null
+    condition?: string | null;
 };
 
 export default function AddApplicationModal({
     open,
     onClose,
-    onConfirm,
+    onConfirm, existingApplications
 } : {
     open: boolean;
     onClose: () => void;
     onConfirm: (draft: Draft) => void;
+    existingApplications: {id: string; name: string; kind: string}[];
 }) {
     const [input, setInput] = useState("");
     const [loading, setLoading] = useState(false);
@@ -33,7 +37,7 @@ export default function AddApplicationModal({
             const res =  await fetch("/api/applications/generate", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({description: input}),
+                body: JSON.stringify({description: input, existingApplications}),
             });
             if (!res.ok) throw new Error();
             const data = await res.json();
