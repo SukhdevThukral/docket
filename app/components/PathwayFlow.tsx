@@ -38,7 +38,7 @@ function StageNode({data}:{data: Stage & { label: string; onSuggest?: (id: strin
     return (
         <div onMouseLeave={() => setHovered(false)}
             onMouseEnter={() => setHovered(true)}
-            className={`relative rounded-xl px-4 py-3 w-56 transition-all duration-150 ${isFallBack ? "border border-dashed border-gray-300 bg-gray-50" : "border border-gray-200 bg-white"} ${isCurrent ? "border-gray-900 ring-1 ring-gray-900" : ""} ${hovered ? "shadow-[0_8px_20px_rgba(0,0,0,0.1)] -translate-y-0.5" : ""}`}
+            className={`relative rounded-xl px-4 py-3 w-64 transition-all duration-150 ${isFallBack ? "border border-dashed border-gray-300 bg-gray-50" : "border border-gray-200 bg-white"} ${isCurrent ? "border-gray-900 ring-1 ring-gray-900" : ""} ${hovered ? "shadow-[0_8px_20px_rgba(0,0,0,0.1)] -translate-y-0.5" : ""}`}
         >
             <Handle type="target" position={Position.Top} style={{opacity: 0}}/>
             <Handle type="target" position={Position.Left} style={{opacity: 0}}/>
@@ -56,7 +56,7 @@ function StageNode({data}:{data: Stage & { label: string; onSuggest?: (id: strin
             )}
 
             <div className="flex items-center gap-1.5">
-                <p className="font-display text-sm text-gray-900">{data.title}</p>
+                <p className="font-display text-sm text-gray-900 break-words leading-tight">{data.title}</p>
                 {isCurrent && (
                     <span className="text-[9px] font-mono uppercase bg-gray-900 text-white px-1.5 py-0.5 rounded-full shrink-0">
                         Now
@@ -133,7 +133,7 @@ export default function PathwayFlow({ stages = DEMO_STAGES, onSuggest,} : {stage
         <div className="w-full h-[600px] border border-gray-200 rounded-xl overflow-hidden bg-gradient-to-b from-gray-50 to-white">
             <ReactFlow nodes={nodes} edges={edges} nodeTypes={nodeTypes} fitView proOptions={{hideAttribution:true}}>
                 <Background color="#d1d5db" gap={22} size={1.5}/>
-                <Controls showInteractive={false} />
+                <Controls showInteractive={false} className="!bottom-4 !left-4 z-10" />
             </ReactFlow>
         </div>
     );
