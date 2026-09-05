@@ -1,3 +1,5 @@
+import { Trash2 } from "lucide-react";
+
 type ChecklistItem = {
     id: string;
     label: string;
@@ -17,9 +19,11 @@ type Application = {
 export default function DetailPane({
     app,
     onToggleItem,
+    onRemove,
 } : {
     app: Application;
     onToggleItem: (itemId: string) => void;
+    onRemove: () => void;
 }) {
     const done = app.checklist.filter((i) => i.done).length;
     const total = app.checklist.length;
@@ -40,6 +44,9 @@ export default function DetailPane({
                 <span className="">
                     {statusLabel}
                 </span>
+                <button onClick={onRemove} className="ml-auto text-gray-300 hover:text-red-400 transition-colors">
+                    <Trash2 className="w-4 h-4"/>
+                </button>
             </div>
             <p className="text-xs text-gray-500 font-mono uppercase mt-1.5 tracking-wide">
                 {app.category} · {app.dueDate} · <span className="text-amber-600">{app.daysLeft} days</span>
