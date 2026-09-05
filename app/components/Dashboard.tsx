@@ -13,6 +13,9 @@ type Draft = {
     category: string;
     dueDate: string;
     checklist: string[];
+    kind: "primary" | "fallback";
+    parentId?: string | null;
+    condition?: string | null;
 };
 
 function daysUntil(dateStr: string) {
@@ -23,7 +26,7 @@ function daysUntil(dateStr: string) {
 }
 
 export default function Dashboard() {
-    const {applications, addApplication, toggleChecklistItem} = useAppStore();
+    const {applications, addApplication, toggleChecklistItem, removeApplication} = useAppStore();
     const [selectedID, setSelectedID] = useState<string>(applications[0]?.id ?? "");
     const [modalOpen, setModalOpen] = useState(false);
 
@@ -47,7 +50,9 @@ export default function Dashboard() {
                 done: false,
             })),
             timeframe: draft.dueDate,
-            kind: "primary",
+            kind: draft.kind ?? "primary",
+            parentId: draft.parentId ?? undefined,
+            condition: draft.condition ?? undefined,
             pathwayStatus: "upcoming",
         };
         addApplication(newApp);
@@ -76,9 +81,13 @@ export default function Dashboard() {
                     itemsTotal: a.checklist.length,
                 }))}
                 selectedID={selectedID} onSelect={setSelectedID}/>
-                {selected && <DetailPane app={selected} onToggleItem={toggleItem}/>}
+                {selected && <DetailPane app={selected} onToggleItem={toggleItem} onRemove={() => {
+                    removeApplication(selectedID);
+                    setSelectedID(applications.filter((a) => a.id !== selectedID)[0]?.id ?? "");
+                }}/>}
             </div>
-            <AddApplicationModal open={modalOpen} onClose={() => setModalOpen(false)} onConfirm={handleAdd}/>
+            <AddApplicationModal open={modalOpen} onClose={() => setModalOpen(false)} onConfirm={handleAdd}
+                existingApplications={applications.map((a) => ({id: a.id, name:a.name, kind: a.kind}))}/>
         </div>
     );
 }
