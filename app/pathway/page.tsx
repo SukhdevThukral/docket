@@ -8,7 +8,7 @@ import PathwaySuggestions from "../components/PathwaySuggestions";
 
 
 export default function PathwayPage () {
-    const {applications, addApplication} = useAppStore();
+    const {applications, incorporateStage} = useAppStore();
     const [focusStageId, setFocusStageId] = useState<string | null>(null);
 
     const stages: Stage[] = applications.map((a) => ({
@@ -23,22 +23,8 @@ export default function PathwayPage () {
     }));
 
     function handleIncorporate(stage: Stage) {
-        addApplication({
-            id: stage.id,
-            name: stage.title,
-            category: stage.category,
-            status: "not_started",
-            dueDate: "",
-            daysLeft: 0,
-            checklist: [],
-            timeframe: stage.timeframe,
-            kind: stage.kind,
-            parentId: stage.parentId,
-            condition: stage.condition,
-            pathwayStatus: stage.status,
-        });
+        incorporateStage(stage);
     }
-
     return (
         <div className="min-h-screen bg-white px-6 sm:px-12 md:px-24 lg:px-50 py-10">
             <h2 className="font-display text-xl text-gray-900 mb-4">Your pathway</h2>
