@@ -52,7 +52,7 @@ type AppStore = {
     updateApplication: (id: string, patch: Partial<Application>) => void;
     removeApplication: (id: string) => void;
     toggleChecklistItem: (appId: string, itemId: string) => void;
-    incorporateStage: (stage: Stage) => void;
+    incorporateStage: (stage: Stage & {checklist?:string[]}) => void;
 };
 
 export const useAppStore = create<AppStore>()(
@@ -141,7 +141,11 @@ export const useAppStore = create<AppStore>()(
                         status:"not_started",
                         dueDate: "",
                         daysLeft: 0,
-                        checklist: [],
+                        checklist: (stage.checklist??[]).map((label) => ({
+                            id: crypto.randomUUID(),
+                            label,
+                            done: false,
+                        })),
                         timeframe: stage.timeframe,
                         kind: stage.kind,
                         parentId: stage.parentId,
