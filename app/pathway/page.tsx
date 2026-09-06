@@ -23,29 +23,28 @@ export default function PathwayPage () {
         status: a.pathwayStatus,
     }));
 
-    function handleIncorporate(stage: Stage) {
+    async function handleIncorporate(stage: Stage) {
 
         const lastPrimary = stages.filter((s) => s.kind === "primary").at(-1);
         const fixedStage = {
             ...stage,
             parentId: stage.parentId ?? lastPrimary?.id,
         };
-
-        fetch("/api/applications/generate", {
-            method: "POST",
-            headers: {"Content-Type":"application/json"},
-            body: JSON.stringify({
-                description: stage.title,
-                existingApplications: applications.map((a) => ({id: a.id, name: a.name, kind: a.kind})),
-            }),
-        }).then((r) => r.json()).then((data) => {
-            console.log("generate response: ",data);
+        
+        try {
+            const r = await fetch("/api/applications/generate", {
+                method: "POST",
+                headers: {"Content-Type":"application/json"},
+                body: JSON.stringify({
+                    description: stage.title,
+                    existingApplications: applications.map((a) => ({id: a.id, name: a.name, kind: a.kind})),
+                }),
+            });
+            const data = await r.json();
             incorporateStage({...fixedStage, checklist: data.checklist ?? []});
-        }).catch(() => {
+        } catch {
             incorporateStage(fixedStage);
-        });
-        // console.timeLog("incorporating:", stage);
-        // incorporateStage(stage);
+        }
     }
     return (
         <div className="min-h-screen bg-white px-6 sm:px-12 md:px-24 lg:px-50 py-10">
