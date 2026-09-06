@@ -7,6 +7,8 @@ import DetailPane from "./DetailPane";
 import AddApplicationModal from "./ApplicationModal";
 import { useAppStore } from "@/store/useAppStore";
 import type { Application } from "@/store/useAppStore";
+import Link from "next/link";
+
 
 type Draft = {
     name: string;
@@ -64,10 +66,10 @@ export default function Dashboard() {
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
                     <h2 className="font-display text-xl text-gray-900">Applications</h2>
-                    <a href="./pathway"
+                    <Link href="/pathway"
                         className="flex items-center gap-1.5 bg-gray-900 text-white text-sm px-4 py-2 rounded-full hover:bg-gray-500 transition-colors">
                         Pathway →
-                    </a>
+                    </Link>    
                 </div>
                 <button onClick={() => setModalOpen(true)}
                         className="flex items-center gap-1.5 bg-gray-900 text-white text-sm px-4 py-2 rounded-full hover:bg-gray-800 transition-colors">
