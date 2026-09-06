@@ -55,8 +55,8 @@ function StageNode({data}:{data: Stage & { label: string; onSuggest?: (id: strin
                 <p className="text-[10px] text-gray-400 italic mb-1">{data.condition}</p>
             )}
 
-            <div className="flex items-center gap-1.5">
-                <p className="font-display text-sm text-gray-900 break-words leading-tight">{data.title}</p>
+            <div className="flex items-start gap-1.5">
+                <p className="font-display text-sm text-gray-900 break-words leading-tight min-w-0 flex-1">{data.title}</p>
                 {isCurrent && (
                     <span className="text-[9px] font-mono uppercase bg-gray-900 text-white px-1.5 py-0.5 rounded-full shrink-0">
                         Now
@@ -116,9 +116,6 @@ function layout(stages: Stage[], onSuggest?: (id:string) => void ) : {nodes: Nod
                 type: "smoothstep",
                 style: {strokeDasharray: "4 4", stroke: '#9ca3af', strokeWidth: 1.5},
                 markerEnd: {type: MarkerType.ArrowClosed, color: "#9ca3af", width: 16, height: 16},
-                label: fb.condition,
-                labelStyle: {fontSize: 10, fill: "#9ca3af"},
-                labelBgStyle: { fill: "#ffffff"},
             });
         });
     });
@@ -130,7 +127,7 @@ export default function PathwayFlow({ stages = DEMO_STAGES, onSuggest,} : {stage
     const {nodes, edges} = useMemo(() => layout(stages, onSuggest), [stages, onSuggest]);
 
     return (
-        <div className="w-full h-[600px] border border-gray-200 rounded-xl overflow-hidden bg-gradient-to-b from-gray-50 to-white">
+        <div className="w-full h-[600px] border border-gray-200 rounded-xl overflow-hidden bg-gradient-to-b from-gray-50 to-white [&_.react-flow__pane:active]:!cursor-grabbing">
             <ReactFlow nodes={nodes} edges={edges} nodeTypes={nodeTypes} fitView proOptions={{hideAttribution:true}}>
                 <Background color="#d1d5db" gap={22} size={1.5}/>
                 <Controls showInteractive={false} className="!bottom-4 !left-4 z-10" />
