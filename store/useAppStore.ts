@@ -131,7 +131,7 @@ export const useAppStore = create<AppStore>()(
                         }
                     ),
                 })),
-
+            
             incorporateStage: (stage) => 
                 set((state) => {
                     const newApp: Application = {
