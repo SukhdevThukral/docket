@@ -27,6 +27,14 @@ function daysUntil(dateStr: string) {
     return Math.max(0, Math.round((due-now)/(1000*60*60*24)))
 }
 
+function derivingStatus(checklist: {done: boolean}[]):"not_started" | "in_progress" | "complete" {
+    if (checklist.length === 0) return "not_started";
+    const done = checklist.filter((i) => i.done).length;
+    if (done === 0) return "not_started";
+    if (done === checklist.length) return "complete";
+    return "in_progress";
+}
+
 export default function Dashboard() {
     const {applications, addApplication, toggleChecklistItem, removeApplication} = useAppStore();
     const [selectedID, setSelectedID] = useState<string>(applications[0]?.id ?? "");
@@ -79,11 +87,11 @@ export default function Dashboard() {
 
             <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-4">
                 <ApplicationList applications={applications.map((a) => ({
-                    ...a, itemsDone: a.checklist.filter((i) => i.done).length,
+                    ...a, status: derivingStatus(a.checklist), daysLeft: daysUntil(a.dueDate), itemsDone: a.checklist.filter((i) => i.done).length,
                     itemsTotal: a.checklist.length,
                 }))}
                 selectedID={selectedID} onSelect={setSelectedID}/>
-                {selected && <DetailPane app={selected} onToggleItem={toggleItem} onRemove={() => {
+                {selected && <DetailPane app={{...selected, status: derivingStatus(selected.checklist), daysLeft: daysUntil(selected.dueDate)}} onToggleItem={toggleItem} onRemove={() => {
                     removeApplication(selectedID);
                     setSelectedID(applications.filter((a) => a.id !== selectedID)[0]?.id ?? "");
                 }}/>}
