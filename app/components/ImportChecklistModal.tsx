@@ -1,8 +1,7 @@
 "use client"
 
 import { useState } from "react";
-import {X, Sparkles, Loader2, Plus, Trash2} from "lucide-react";
-import { SP } from "next/dist/shared/lib/utils";
+import {X, Sparkles, Loader2, Trash2} from "lucide-react";
 
 export default function ImportChecklistModal({
     open, onClose, onConfirm, appName,
@@ -32,7 +31,7 @@ export default function ImportChecklistModal({
             const data = await  res.json();
             setItems(data.items);
         } catch {
-            setError("Couldnt extract items, try rephrasing!!")
+            setError("Could't extract items, try rephrasing.")
         } finally {
             setLoading(false);
         }
@@ -100,7 +99,7 @@ export default function ImportChecklistModal({
                                 <div key={i} className="flex items-center gap-2">
                                     <input value={item} onChange={(e) => updateItem(i, e.target.value)}
                                     className="flex-1 text-sm text-gray-800 border-b border-gray-100 pb-1 focus:outline-none focus:border-gray-400"/>
-                                    <button onClick={() => removeItem(i)} className="text-gray-300 hover:text-red-400 shrik-0">
+                                    <button onClick={() => removeItem(i)} className="text-gray-300 hover:text-red-400 shrink-0">
                                         <Trash2 className="w-3.5 h-3.5"/>
                                     </button>
                                 </div>
