@@ -1,4 +1,7 @@
 import { Trash2 } from "lucide-react";
+import ImportChecklistModal from "./ImportChecklistModal";
+import { useAppStore } from "@/store/useAppStore";
+import { useState } from "react";
 
 type ChecklistItem = {
     id: string;
@@ -25,6 +28,9 @@ export default function DetailPane({
     onToggleItem: (itemId: string) => void;
     onRemove: () => void;
 }) {
+    const {updateApplication} = useAppStore();
+    const [importOpen, setImportOpen] = useState(false);
+
     const done = app.checklist.filter((i) => i.done).length;
     const total = app.checklist.length;
     const pct = total === 0? 0: (done / total) * 100;
@@ -34,6 +40,16 @@ export default function DetailPane({
         not_started: "Not started",
         complete: "Complete",
     }[app.status];
+
+    function handleImport(newItems: string[]){
+        const toAdd = newItems.map((label) => ({
+            id: crypto.randomUUID(),
+            label, done: false,
+        }));
+        updateApplication(app.id, {
+            checklist: [...app.checklist, ...toAdd],
+        });
+    }
 
     return(
         <div className="border border-gray-200 rounded-xl p-6">
@@ -76,9 +92,11 @@ export default function DetailPane({
                         </span>
                     </label>
                 ))}
-                <button className="text-xs text-gray-400 hover:text-gray-600 mt-3 text-left">
+                <button onClick={() => setImportOpen(true)} className="text-xs text-gray-400 hover:text-gray-600 mt-3 text-left">
                     + Import from text
                 </button>
+                <ImportChecklistModal open={importOpen} onClose={() => setImportOpen(false)}
+                onConfirm={handleImport} appName={app.name}/>
             </div>
         </div>
     );
