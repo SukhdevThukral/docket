@@ -1,5 +1,7 @@
 "use client";
 
+import { OnboardingData } from "@/app/onboarding/page";
+
 const TIMELINES = ["Within 6 months", "6-12 months", "1-2 years", "2+ years"];
 const LEVELS = ["High school","Undergraduate", "Postgraduate", "Other"];
 
