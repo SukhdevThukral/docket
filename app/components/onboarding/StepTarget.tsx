@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-// import type {OnboardingData}
+import { OnboardingData } from "@/app/onboarding/page";
 
 const COUNTRIES = ["Hungary", "Germany", "Italy", "France", "Netherlands", "USA", "Canada", "UK", "Other"];
 const FIELDS = ["Engineering", "Business", "Medicine", "Law", "Arts", "Computer Science", "Social Sciences", "Other"];
@@ -16,7 +15,7 @@ export default function StepTarget({
     onBack: () => void;
 }) {
     function toggleCountry(c: string) {
-        const current = data.fields;
+        const current = data.countries;
         onUpdate({countries: current.includes(c) ? current.filter((x) => x !== c) : [...current, c]});
     }
 
@@ -37,7 +36,7 @@ export default function StepTarget({
                     <p className="text-xs text-gray-500 uppercase tracking-wide mb-3">Target countries</p>
                     <div className="flex flex-wrap gap-2">
                         {COUNTRIES.map((c) => (
-                            <button key={c} onClick={() => toggleCountry(c)} className={`px-4 py-2 rounded-full border text-sm transition-all ${data.countries === c ? "border-gray-900 bg-gray-900 text-white" : "border-gray-200 hover:border-gray-300 text-gray-700"}`}>
+                            <button key={c} onClick={() => toggleCountry(c)} className={`px-4 py-2 rounded-full border text-sm transition-all ${data.countries.includes(c) ? "border-gray-900 bg-gray-900 text-white" : "border-gray-200 hover:border-gray-300 text-gray-700"}`}>
                                 {c}
                             </button>
                         ))}
