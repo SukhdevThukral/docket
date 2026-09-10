@@ -53,11 +53,15 @@ type AppStore = {
     removeApplication: (id: string) => void;
     toggleChecklistItem: (appId: string, itemId: string) => void;
     incorporateStage: (stage: Stage & {checklist?:string[]}) => void;
+    isOnboarded: boolean;
+    setOnboarded: () => void;
+    resetStore: () => void;
 };
 
 export const useAppStore = create<AppStore>()(
     persist(
         (set) => ({
+            isOnboarded: false,
             applications: [
                 {
                     id: "s1",
@@ -157,6 +161,12 @@ export const useAppStore = create<AppStore>()(
                         applications: already ? state.applications : [...state.applications, newApp],
                     };
                 }),
+            setOnboarded: () => set({isOnboarded: true}),
+
+            resetStore: () => set({
+                isOnboarded: false,
+                applications: [],
+            }),
         }),
         {
             name: "docket-store",
