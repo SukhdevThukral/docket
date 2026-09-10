@@ -1,4 +1,5 @@
 "use client";
+import { OnboardingData } from "@/app/onboarding/page";
 
 const GOALS = [
     {id: "study_abroad", label: "Study abroad", desc: "Enroll in a university in another country"},
