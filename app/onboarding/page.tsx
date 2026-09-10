@@ -1,13 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useAppStore } from "@/store/useAppStore";
 
 import StepGoal from "../components/onboarding/StepGoal";
 import StepTimeline from "../components/onboarding/StepTimeline";
 import StepTarget from "../components/onboarding/StepTarget";
 import StepSituation from "../components/onboarding/StepSituation";
+import StepPreview from "../components/onboarding/StepPreview";
 
 export type OnboardingData = {
     goal: string;
@@ -18,7 +19,7 @@ export type OnboardingData = {
     budget: string;
     hasTranscripts: boolean;
     hasLanguageTest: boolean;
-    lanuageTest: string;
+    languageTest: string;
     otherDocs: string;
 };
 
@@ -31,7 +32,7 @@ const EMPTY:  OnboardingData = {
     budget: "",
     hasTranscripts: false,
     hasLanguageTest: false,
-    lanuageTest: "",
+    languageTest: "",
     otherDocs: "",
 };
 
@@ -57,10 +58,10 @@ export default function OnboardingPage() {
 
     const steps = [
         <StepGoal key={0} data={data} onUpdate={update} onNext={next}/>,
-        <StepGoal key={1} data={data} onUpdate={update} onNext={next} onBack={back}/>,
-        <StepGoal key={2} data={data} onUpdate={update} onNext={next} onBack={back}/>,
-        <StepGoal key={3} data={data} onUpdate={update} onNext={next} onBack={back}/>,
-        <StepGoal key={4} data={data} onUpdate={update} onNext={next} onBack={back}/>,
+        <StepTimeline key={1} data={data} onUpdate={update} onNext={next} onBack={back}/>,
+        <StepTarget key={2} data={data} onUpdate={update} onNext={next} onBack={back}/>,
+        <StepSituation key={3} data={data} onUpdate={update} onNext={next} onBack={back}/>,
+        <StepPreview key={4} data={data} onBack={back} onConfirm={handleConfirm}/>,
     ];
 
     return (
