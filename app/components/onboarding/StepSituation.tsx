@@ -1,5 +1,7 @@
 "use client";
 
+import { OnboardingData } from "@/app/onboarding/page";
+
 const LANGUAGE_TESTS = ["IELTS", "TOEFL", "Duolingo", "Other", "None yet"];
 
 export default function StepSituation({
