@@ -127,7 +127,7 @@ export default function PathwayFlow({ stages = DEMO_STAGES, onSuggest,} : {stage
     const {nodes, edges} = useMemo(() => layout(stages, onSuggest), [stages, onSuggest]);
 
     return (
-        <div className="w-full h-[600px] border border-gray-200 rounded-xl overflow-hidden bg-gradient-to-b from-gray-50 to-white [&_.react-flow__pane:active]:!cursor-grabbing">
+        <div className="w-full h-[400px] md:h-[600px] border border-gray-200 rounded-xl overflow-hidden bg-gradient-to-b from-gray-50 to-white [&_.react-flow__pane:active]:!cursor-grabbing">
             <ReactFlow nodes={nodes} edges={edges} nodeTypes={nodeTypes} fitView proOptions={{hideAttribution:true}}>
                 <Background color="#d1d5db" gap={22} size={1.5}/>
                 <Controls showInteractive={false} className="!bottom-4 !left-4 z-10" />
