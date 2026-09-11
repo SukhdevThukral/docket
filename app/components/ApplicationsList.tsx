@@ -36,7 +36,7 @@ export default function ApplicationList({
                                     {app.name}
                                 </p>
                                 <p className="text-xs text-gray-500 mt-0.5">
-                                    <span className="text-amber-600">● {app.daysLeft} days</span>
+                                    <span className={app.daysLeft <= 7 ? "text-red-500":app.daysLeft <= 30 ? "text-amber-600":"text-green-600"}>● {app.daysLeft} days</span>
                                     {app.itemsTotal - app.itemsDone > 0 && (
                                         <> · {app.itemsTotal - app.itemsDone} left</>
                                     )}
@@ -49,6 +49,11 @@ export default function ApplicationList({
                     );
                 })}
             </div>
+            {applications.length === 0 && (
+                <p className="text-sm text-gray-400 px-4 py-6 text-center">
+                    No applications yet - add one to get started.
+                </p>
+            )}
         </div>
     );
 }
