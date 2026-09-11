@@ -10,6 +10,7 @@ import Link from "next/link";
 
 export default function PathwayPage () {
     const {applications, incorporateStage} = useAppStore();
+    const [showSuggestions, setShowSuggestions] = useState(false);
     const [focusStageId, setFocusStageId] = useState<string | null>(null);
 
     const stages: Stage[] = applications.map((a) => ({
@@ -47,16 +48,26 @@ export default function PathwayPage () {
         }
     }
     return (
-        <div className="min-h-screen bg-white px-6 sm:px-12 md:px-24 lg:px-50 py-10">
-            <h2 className="font-display text-xl text-gray-900 mb-4">Your pathway</h2>
-            <Link href="/dashboard" className="flex items-center gap-1.5 bg-gray-900 text-white text-sm px-4 py-2 rounded-full hover:bg-gray-500 transition-colors mb-4 inline-flex">
-                Dashboard →
-            </Link>
+        <div className="min-h-screen bg-white px-4 py-6 sm:px-12 md:px-24 lg:px-50 md:py-10">
+            <div className="flex items-center justify-between mb-4">
+                <h2 className="font-display text-xl text-gray-900">Your pathway</h2>
+                <Link href="/dashboard" className="flex items-center gap-1.5 bg-gray-900 text-white text-sm px-4 py-2 rounded-full hover:bg-gray-500 transition-colors">
+                    Dashboard →
+                </Link>
+            </div>
             <div className="flex flex-col md:flex-row gap-4">
                 <div className="flex-1">
                     <PathwayFlow stages={stages} onSuggest={setFocusStageId}/>
                 </div>
-                <PathwaySuggestions stages={stages} onIncorporate={handleIncorporate} focusStageId={focusStageId} onFocusClear={() => setFocusStageId(null)}/>
+                <div className="md:hidden">
+                    <button onClick={() => setShowSuggestions((v) => !v)} className="w-full flex items-center justify-between px-4 py-3 border border-gray-200 rounded-xl text-sm text-gray-600">
+                        <span>AI Suggestions</span>
+                        <span>{showSuggestions ? "▲":"▼"}</span>
+                    </button>
+                </div>
+                <div className={`md:block ${showSuggestions ? "block" : "hidden"}`}>
+                    <PathwaySuggestions stages={stages} onIncorporate={handleIncorporate} focusStageId={focusStageId} onFocusClear={() => setFocusStageId(null)}/>
+                </div>
             </div>
         </div>
     );
