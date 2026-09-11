@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAppStore } from "@/store/useAppStore";
 
@@ -37,11 +37,16 @@ const EMPTY:  OnboardingData = {
 };
 
 export default function OnboardingPage() {
+    const {isOnboarded} = useAppStore();
     const [step, setStep] = useState(0);
     const [data,setData] = useState<OnboardingData>(EMPTY);
     const {setOnboarded, addApplication} = useAppStore();
     const router = useRouter();
-
+    
+    useEffect(() => {
+        if (isOnboarded) router.push("/dashboard");
+    }, [isOnboarded]);
+    
     function update(patch: Partial<OnboardingData>) {
         setData((prev) => ({...prev, ...patch}));
     }
