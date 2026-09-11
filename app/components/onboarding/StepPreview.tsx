@@ -9,7 +9,7 @@ const category_col: Record<string, string> = {
     "SCHOLARSHIP":  "bg-violet-50 text-violet-600",
     "UNIVERSITY":   "bg-blue-50 text-blue-600",
     "BRIDGE PROGRAM": "bg-amber-50 text-amber-600",
-    "OTHERS": "bg-gray-100 text-gray-500",
+    "OTHER": "bg-gray-100 text-gray-500",
 };
 
 export default function StepPreview({
@@ -81,11 +81,11 @@ export default function StepPreview({
             {primaries.map((app) => (
                 <div key={app.id}>
                     <div className="px-5 py-4 rounded-xl border border-gray-200 bg-white">
-                        <div className="flex items-start justify-between gap-3">
+                        <div className="flex flex-col gap-1 sm: flex-row sm:items-start sm:justify-between sm:gap-3">
                             <p className="text-sm font-medium text-gray-900 leading-snug">
                                 {app.name}
                             </p>
-                            <span className={`shrink-0 text-[10px] font-medium px-2 py-0.5 rounded-full ${category_col[app.category] ?? category_col["OTHER"]}`}>
+                            <span className={`slef-start shrink-0 text-[10px] font-medium px-2 py-0.5 rounded-full ${category_col[app.category] ?? category_col["OTHER"]}`}>
                                 {app.category}
                             </span>
                         </div>
@@ -123,7 +123,7 @@ export default function StepPreview({
                 ))}
             </div>
 
-            <div className="flex items-center gap-4 mt-10 pt-6 border-t border-gray-100">
+            <div className="flex flex-wrap items-center gap-3 mt-10 pt-6 border-t border-gray-100">
                 <button onClick={() => onConfirm(applications!)} className="bg-gray-900 text-white text-sm px-6 py-2.5 rounded-full hover:bg-gray-800 transition-colors">
                     Confirm Pathway
                 </button>

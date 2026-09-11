@@ -37,16 +37,15 @@ const EMPTY:  OnboardingData = {
 };
 
 export default function OnboardingPage() {
-    const {isOnboarded} = useAppStore();
     const [step, setStep] = useState(0);
     const [data,setData] = useState<OnboardingData>(EMPTY);
-    const {setOnboarded, addApplication} = useAppStore();
+    const {isOnboarded, setOnboarded, addApplication} = useAppStore();
     const router = useRouter();
     
     useEffect(() => {
         if (isOnboarded) router.push("/dashboard");
     }, [isOnboarded]);
-    
+
     function update(patch: Partial<OnboardingData>) {
         setData((prev) => ({...prev, ...patch}));
     }
@@ -70,7 +69,7 @@ export default function OnboardingPage() {
     ];
 
     return (
-        <div className="min-h-screen bg-white flex flex-col items-center justify-center px-6">
+        <div className="min-h-screen bg-white flex flex-col items-center justify-center px-6 py-8">
             <div className="w-full max-w-lg">
                 <div className="flex gap-1.5 mb-8">
                     {steps.map((_, i) => (
