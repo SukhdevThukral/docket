@@ -86,15 +86,26 @@ export default function Dashboard() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-4">
-                <ApplicationList applications={applications.map((a) => ({
-                    ...a, status: derivingStatus(a.checklist), daysLeft: daysUntil(a.dueDate), itemsDone: a.checklist.filter((i) => i.done).length,
-                    itemsTotal: a.checklist.length,
-                }))}
-                selectedID={selectedID} onSelect={setSelectedID}/>
-                {selected && <DetailPane app={{...selected, status: derivingStatus(selected.checklist), daysLeft: daysUntil(selected.dueDate)}} onToggleItem={toggleItem} onRemove={() => {
-                    removeApplication(selectedID);
-                    setSelectedID(applications.filter((a) => a.id !== selectedID)[0]?.id ?? "");
-                }}/>}
+                <div className={selected ? "hidden md:block": "block"}>
+                    <ApplicationList applications={applications.map((a) => ({
+                        ...a, status: derivingStatus(a.checklist), daysLeft: daysUntil(a.dueDate), itemsDone: a.checklist.filter((i) => i.done).length,
+                        itemsTotal: a.checklist.length,
+                    }))}
+                    selectedID={selectedID} onSelect={setSelectedID}/>
+                </div>
+                {selected && (
+                    <div>
+                        <button onClick={() => setSelectedID("")}
+                        className="md:hidden flex items-center gap-1 text-xs text-gray-500 mb-3">
+                            ← Back
+                        </button>
+                        <DetailPane app={{...selected, status: derivingStatus(selected.checklist), daysLeft: daysUntil(selected.dueDate)}} onToggleItem={toggleItem} onRemove={() => {
+                                removeApplication(selectedID);
+                                setSelectedID(applications.filter((a) => a.id !== selectedID)[0]?.id ?? "");
+                            }}
+                        />
+                    </div>
+                )}
             </div>
             <AddApplicationModal open={modalOpen} onClose={() => setModalOpen(false)} onConfirm={handleAdd}
                 existingApplications={applications.map((a) => ({id: a.id, name:a.name, kind: a.kind}))}/>
