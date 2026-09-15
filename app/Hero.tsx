@@ -24,7 +24,7 @@ export default function Hero(){
                     </p>
 
                     <div className="flex items-center gap-6 mt-6">
-                        <a href="/dashboard" className="bg-gray-900 text-white text-sm px-5 py-2.5 rounded-full hover:bg-gray-800 transition-colors">
+                        <a href="/onboarding" className="bg-gray-900 text-white text-sm px-5 py-2.5 rounded-full hover:bg-gray-800 transition-colors">
                             Start now
                         </a>
                     </div>
