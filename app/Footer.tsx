@@ -42,9 +42,9 @@ export default function Footer() {
                     <div>
                         <p className="text-xs text-gray-500 uppercase tracking-wide">Product</p>
                         <div className="flex flex-col gap-3 mt-4 text-sm text-gray-300">
-                            <a href="/" className="hover:text-white transition-colors">Dashboard</a>
-                            <a href="/" className="hover:text-white transition-colors">Applications</a>
-                            <a href="/" className="hover:text-white transition-colors">Checklist</a>
+                            <a href="/onboarding" className="hover:text-white transition-colors">Dashboard</a>
+                            <a href="/onboarding" className="hover:text-white transition-colors">Applications</a>
+                            <a href="/onboarding" className="hover:text-white transition-colors">Checklist</a>
                         </div>
                     </div>
                 </div>
