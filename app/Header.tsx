@@ -5,8 +5,8 @@ export default function Header() {
             <a href="/" className="text-sm text-gray-600 hover:text-gray-900 hidden sm:block">
                 Why I'm building this
             </a>
-            <a href="/" className="text-sm bg-gray-900 text-white px-5 py-2.5 rounded-full hover:bg-gray-800 transition-colors">
-                Login / Signup
+            <a href="/onboarding" className="text-sm bg-gray-900 text-white px-5 py-2.5 rounded-full hover:bg-gray-800 transition-colors">
+                Get started
             </a>
         </nav>
     )
