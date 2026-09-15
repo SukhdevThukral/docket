@@ -1,8 +1,10 @@
 # Docket
 
-Track each AND every application, scholarship, and deadline on your path to studying abroad in one place.
+>Track each AND every application, scholarship, and deadline on your path to studying abroad in one place.
 
-Docket takes your goals, timeline, and current situation through a short onboarding flow, then uses AI to generate a personalized pathway of applications ordered by priority and deadlines. Each stage has a checklist, a status, and a fallback branch if a primary route doesn't work out.
+_Docket takes your goals, timeline, and current situation through a short onboarding flow, then uses AI to generate a personalized pathway of applications ordered by priority and deadlines. Each stage has a checklist, a status, and a fallback branch if a primary route doesn't work out._
+
+<img width="1894" height="916" alt="docket" src="https://github.com/user-attachments/assets/1070b807-4a4c-41e7-a1d9-235ba7652098" />
 
 ## Features
 
