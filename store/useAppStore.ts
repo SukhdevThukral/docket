@@ -62,50 +62,7 @@ export const useAppStore = create<AppStore>()(
     persist(
         (set) => ({
             isOnboarded: false,
-            applications: [
-                {
-                    id: "s1",
-                    name: "IDK Bridge Enrollment",
-                    category: "BRIDGE PROGRAM",
-                    status: "in_progress",
-                    dueDate: "2026-10-20",
-                    daysLeft: daysUntil("2026-10-20"),
-                    checklist: [
-                        { id: "1a", label: "Transcript request", done: true },
-                        { id: "1b", label: "Enrollment form", done: true },
-                        { id: "1c", label: "Fee receipt upload", done: false },
-                    ],
-                    timeframe: "2026",
-                    kind: "primary",
-                    pathwayStatus: "current",
-                },
-                {
-                    id:"s2",
-                    name: "Stipendium Hungaricum",
-                    category: "SCHOLARSHIP",
-                    status: "not_started",
-                    dueDate: "2026-11-01",
-                    daysLeft: daysUntil("2026-11-01"),
-                    checklist: [],
-                    timeframe: "Nov 2026 - Sep 2027",
-                    kind: "primary",
-                    pathwayStatus: "upcoming",
-                },
-                {
-                    id: "s3",
-                    name: "US Transfer (need-based aid)",
-                    category: "TRANSFER",
-                    status: "not_started",
-                    dueDate: "",
-                    daysLeft: 0,
-                    checklist: [],
-                    timeframe: "2027",
-                    kind: "fallback",
-                    parentId: "s2",
-                    condition: "If rejected",
-                    pathwayStatus: "upcoming",
-                },
-            ],
+            applications: [],
 
             addApplication: (app) => 
                 set((state) => ({
