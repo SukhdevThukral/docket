@@ -1,36 +1,30 @@
 import { Package, Smile, Globe, Receipt, Zap, ShieldCheck } from "lucide-react";
-import { title } from "process";
 
 const FEATURES = [
     {
         icon: Package,
-        title: "Sell anything",
-        body: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets"
+        title: "Add applications",
+        body: "Add any scholarship, university, or program manually — set a due date, drop in your checklist items, and track status as you go. Everything lives in one place instead of scattered across browser tabs and notes apps."
     },
     {
         icon: Smile,
-        title: "Sell anything.",
-        body:"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets"
+        title: "Multi-step onboarding",
+        body: "Answer five quick questions about your goal, what you already have, where you want to go, and your budget. Takes under two minutes and gives Docket everything it needs to build a pathway that actually fits your situation."
     },
     {
         icon: Globe,
-        title: "Sell anything.",
-        body:"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets"
+        title: "AI-generated pathways",
+        body: "Gemini looks at your answers and generates a ranked list of applications ordered by deadline and priority — with fallback routes built in for the competitive ones. You review it, regenerate if needed, and confirm in one tap."
     },
     {
         icon: Receipt,
-        title: "Sell anything.",
-        body:"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets"
+        title: "Per-application checklists",
+        body: "Every application comes with a checklist specific to its type — a scholarship has different steps than a university transfer. Tick items off as you complete them and see your progress at a glance on the dashboard."
     },
     {
         icon: Zap,
-        title: "Sell anything.",
-        body:"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets"
-    },
-    {
-        icon: ShieldCheck,
-        title: "Sell anything.",
-        body:"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset's Body Type sheets"
+        title: "Pathway visualiser",
+        body: "See your entire plan as a flow graph — primary stages in sequence, fallback branches off the risky ones. Spot gaps, understand dependencies, and know exactly what comes next without having to read through a list."
     },
 ];
 
