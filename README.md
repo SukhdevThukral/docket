@@ -1,36 +1,95 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Docket
 
-## Getting Started
+Track each AND every application, scholarship, and deadline on your path to studying abroad in one place.
 
-First, run the development server:
+Docket takes your goals, timeline, and current situation through a short onboarding flow, then uses AI to generate a personalized pathway of applications ordered by priority and deadlines. Each stage has a checklist, a status, and a fallback branch if a primary route doesn't work out.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Features
+
+- **AI-generated pathways**, so gemini builds a ranked list of scholarships, universities, and bridge programs tailored to your answers
+- **Multi-step onboarding**, your goals, situation, target countries/fields, budget, timeline; takes under 2 minutes
+- **Fallback branches** discusses risky stages (e.g. competitive scholarships) automatically get a fallback route so you always have a next move
+- **Per-application checklists** the specific required steps for each application type and trackable as you go
+- **Pathway visualizer**, used React Flow graph showing your primary and fallback branches at a glance
+- **Persistent state**, Zustand + localStorage; your pathway wont be affected by a page refresh
+
+
+## Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 14 (App Router) |
+| Language | TypeScript |
+| Styling | Tailwind CSS |
+| State | Zustand with `persist` middleware |
+| AI | Gemini 2.0 Flash (`/api/onboarding/generate`) |
+| Visualizer | React Flow |
+
+## Project Structure
+
+```
+app/
+  onboarding/         # Multi-step onboarding flow
+    page.tsx          # Shell — holds OnboardingData state, steps, routing
+    steps/
+      StepGoal.tsx
+      StepSituation.tsx
+      StepTarget.tsx
+      StepTimeline.tsx
+      StepPreview.tsx  # Calls AI, previews generated pathway
+  pathway/            # Main dashboard after onboarding
+    page.tsx
+  api/
+    onboarding/
+      generate/
+        route.ts      # POST → Gemini → returns Application[]
+
+components/
+  onboarding/
+    ui.tsx            # Shared primitives: PillButton, OptionButton, SectionLabel, StepFooter
+
+store/
+  useAppStore.ts      # Zustand store — applications, checklist, onboarding state
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Running Locally
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+# Install dependencies
+npm install
 
-## Learn More
+# Add your Gemini API key
+echo "GEMINI_API_KEY=your_key_here" >> .env.local
 
-To learn more about Next.js, take a look at the following resources:
+# Run the dev server
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Open [http://localhost:3000](http://localhost:3000) and go through onboarding — it takes about 90 seconds.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## How It Works
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. **Onboarding**: 5 steps collect your goal, what you already have, target countries and fields, budget, and timeline
+2. **Generation**: `StepPreview` POSTs your answers to `/api/onboarding/generate`, which sends them to Gemini with a "smart" prompt and returns 3–6 applications as JSON
+3. **Confirmation** lets you review the AI-generated pathway and confirm or regenerate
+4. **Dashboard** :  applications land in the Zustand store, the pathway page visualizes them as a React Flow graph with primary stages in sequence and fallbacks branching off each risky node
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Environment Variables
+
+| Variable | Description |
+|---|---|
+| `GEMINI_API_KEY` | Google AI Studio API key |
+
+
+## Roadmap
+
+- [ ] Deadline reminders / email notifications
+- [ ] Manual stage creation and reordering
+- [ ] Document upload per application
+- [ ] Share pathway as a public link
+
+## LICENSE
+MIT
