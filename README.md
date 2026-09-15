@@ -2,57 +2,13 @@
 
 >Track each AND every application, scholarship, and deadline on your path to studying abroad in one place.
 
-_Docket takes your goals, timeline, and current situation through a short onboarding flow, then uses AI to generate a personalized pathway of applications ordered by priority and deadlines. Each stage has a checklist, a status, and a fallback branch if a primary route doesn't work out._
+_it takes your goals, timeline, and current financial situation thru an onboarding flow, further then uses AI to generate a personalized pathway of applications. Each stage has a checklist, a status, and a fallback branch if a primary route doesn't work out_
 
 <img width="1894" height="916" alt="docket" src="https://github.com/user-attachments/assets/1070b807-4a4c-41e7-a1d9-235ba7652098" />
 
-## Features
+## how ts was made
 
-- **AI-generated pathways**, so gemini builds a ranked list of scholarships, universities, and bridge programs tailored to your answers
-- **Multi-step onboarding**, your goals, situation, target countries/fields, budget, timeline; takes under 2 minutes
-- **Fallback branches** discusses risky stages (e.g. competitive scholarships) automatically get a fallback route so you always have a next move
-- **Per-application checklists** the specific required steps for each application type and trackable as you go
-- **Pathway visualizer**, used React Flow graph showing your primary and fallback branches at a glance
-- **Persistent state**, Zustand + localStorage; your pathway wont be affected by a page refresh
-
-
-## Stack
-
-| Layer | Technology |
-|---|---|
-| Framework | Next.js 14 (App Router) |
-| Language | TypeScript |
-| Styling | Tailwind CSS |
-| State | Zustand with `persist` middleware |
-| AI | Gemini 2.0 Flash (`/api/onboarding/generate`) |
-| Visualizer | React Flow |
-
-## Project Structure
-
-```
-app/
-  onboarding/         # Multi-step onboarding flow
-    page.tsx          # Shell — holds OnboardingData state, steps, routing
-    steps/
-      StepGoal.tsx
-      StepSituation.tsx
-      StepTarget.tsx
-      StepTimeline.tsx
-      StepPreview.tsx  # Calls AI, previews generated pathway
-  pathway/            # Main dashboard after onboarding
-    page.tsx
-  api/
-    onboarding/
-      generate/
-        route.ts      # POST → Gemini → returns Application[]
-
-components/
-  onboarding/
-    ui.tsx            # Shared primitives: PillButton, OptionButton, SectionLabel, StepFooter
-
-store/
-  useAppStore.ts      # Zustand store — applications, checklist, onboarding state
-```
+i used [Next.js](https://nextjs.org/) with the app router for the app and its arch and [Typescript](https://www.typescriptlang.org/), [Tailwind CSS](tailwindcss.com) for the UI styling and the Gemini API to use AI through the onboarding, specific node tips, additions and automatic checklist for the same, Zustand manages the app state and persists it locally between sessions, React Flow to visualise the Applications data into a pathway flowchart, and deployed on [Vercel](vercel.com) 
 
 
 ## Running Locally
@@ -68,30 +24,14 @@ echo "GEMINI_API_KEY=your_key_here" >> .env.local
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) and go through onboarding — it takes about 90 seconds.
+and boom open [http://localhost:3000](http://localhost:3000) and go through the onboarding
 
 
-## How It Works
+## how ts works
 
-1. **Onboarding**: 5 steps collect your goal, what you already have, target countries and fields, budget, and timeline
-2. **Generation**: `StepPreview` POSTs your answers to `/api/onboarding/generate`, which sends them to Gemini with a "smart" prompt and returns 3–6 applications as JSON
-3. **Confirmation** lets you review the AI-generated pathway and confirm or regenerate
-4. **Dashboard** :  applications land in the Zustand store, the pathway page visualizes them as a React Flow graph with primary stages in sequence and fallbacks branching off each risky node
+it starts on a landing page, leads you on to a small 5-step onboarding page and adjusts your goals and suggests you higher studies options, generating a checklist for your selected program/scholarship/option and another Pathway page to visualize your applications' primary and fallback options
 
 
-## Environment Variables
-
-| Variable | Description |
-|---|---|
-| `GEMINI_API_KEY` | Google AI Studio API key |
-
-
-## Roadmap
-
-- [ ] Deadline reminders / email notifications
-- [ ] Manual stage creation and reordering
-- [ ] Document upload per application
-- [ ] Share pathway as a public link
 
 ## LICENSE
-MIT
+[MIT](https://github.com/SukhdevThukral/docket/blob/master/LICENSE)
