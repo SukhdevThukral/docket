@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Docket
 
-## Getting Started
+>Track each AND every application, scholarship, and deadline on your path to studying abroad in one place.
 
-First, run the development server:
+_it takes your goals, timeline, and current financial situation thru an onboarding flow, further then uses AI to generate a personalized pathway of applications. Each stage has a checklist, a status, and a fallback branch if a primary route doesn't work out_
+
+<img width="1894" height="916" alt="docket" src="https://github.com/user-attachments/assets/1070b807-4a4c-41e7-a1d9-235ba7652098" />
+
+## how ts was made
+
+i used [Next.js](https://nextjs.org/) with the app router for the app and its arch and [Typescript](https://www.typescriptlang.org/), [Tailwind CSS](tailwindcss.com) for the UI styling and the Gemini API to use AI through the onboarding, specific node tips, additions and automatic checklist for the same, Zustand manages the app state and persists it locally between sessions, React Flow to visualise the Applications data into a pathway flowchart, and deployed on [Vercel](vercel.com) 
+
+
+## Running Locally
 
 ```bash
+# Install dependencies
+npm install
+
+# Add your Gemini API key
+echo "GEMINI_API_KEY=your_key_here" >> .env.local
+
+# Run the dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+and boom open [http://localhost:3000](http://localhost:3000) and go through the onboarding
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## how ts works
 
-## Learn More
+it starts on a landing page, leads you on to a small 5-step onboarding page and adjusts your goals and suggests you higher studies options, generating a checklist for your selected program/scholarship/option and another Pathway page to visualize your applications' primary and fallback options
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## LICENSE
+[MIT](https://github.com/SukhdevThukral/docket/blob/master/LICENSE)
