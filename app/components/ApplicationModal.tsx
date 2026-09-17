@@ -93,7 +93,7 @@ export default function AddApplicationModal({
                 {!draft && (
                     <div className="mt-5">
                         <textarea value={input} onChange={(e) => setInput(e.target.value)} placeholder="e.g. Stipendium Hangaricum Scholarship, deadline mid november, applying to ELTE and Debrecen" rows={3}
-                        className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm resize-none focus:border-gray-400"/>
+                        className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-600 resize-none focus:border-gray-400 placeholder-gray-500"/>
 
                         {error && <p className="text-xs text-red-500 mt-2">{error}</p>}
                         <button onClick={generate} disabled={loading || input.trim().length < 3} className="mt-3 flex items-center gap-2 bg-gray-900 text-white text-sm px-5 py-2.5 rounded-full hover:bg-gray-800 transition-colors disabled:opacity-40">
