@@ -75,7 +75,7 @@ export default function ImportChecklistModal({
                 {!items && (
                     <div className="mt-5">
                         <textarea value={input} onChange={(e) => setInput(e.target.value)} placeholder="Paste requirements, email, or any text here..." rows={5}
-                        className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm resize-none focus:outline-none focus:border-gray-400"/>
+                        className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm resize-none focus:outline-none focus:border-gray-400 placeholder-gray-500 text-gray-900"/>
                         {error && <p className="text-xs text-red-500 mt-2">{error}</p>}
                         <button onClick={generate} disabled={loading || input.trim().length < 10}
                         className="mt-3 flex items-center gap-2 bg-gray-900 text-white text-sm px-5 py-2.5 rounded-full hover:bg-gray-800 transition-colors disabled:opacity-40"
